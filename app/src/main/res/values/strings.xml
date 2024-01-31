@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyFinances</string>
+    <string name="title">MY FINANCES</string>
+    <string name="public_data">Public data</string>
+    <string name="password">Password</string>
+    <string name="public_data_hint">enter username or email</string>
+    <string name="enter_password">enter password</string>
+    <string name="sign_in">sign in</string>
+    <string name="sign_up">sign up</string>
+    <string name="forgot_password">forgot password?</string>
+</resources>
