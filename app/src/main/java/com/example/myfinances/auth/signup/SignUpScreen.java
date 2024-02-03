@@ -1,4 +1,4 @@
-package com.example.myfinances.auth;
+package com.example.myfinances.auth.signup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
