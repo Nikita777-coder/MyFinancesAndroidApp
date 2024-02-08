@@ -13,7 +13,7 @@ import timber.log.Timber;
 
 @UtilityClass
 public class AuthService {
-    private final static AuthApi AUTH_SERVICE_SERVICE = (new Service<AuthApi>(AuthApi.class)).getController();
+    private final static AuthApi AUTH_SERVICE_SERVICE = (new Service<>(AuthApi.class)).getController();
     public static Response<String> signIn(SignInRequest signInRequest) {
         final Response<String>[] responseOut = new Response[]{null};
 

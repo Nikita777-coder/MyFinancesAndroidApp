@@ -12,7 +12,7 @@ import com.example.myfinances.auth.signin.reactions.HttpStatusBadRequestReaction
 import com.example.myfinances.auth.signin.reactions.HttpStatusOkReaction;
 import com.example.myfinances.auth.signin.reactions.Reaction;
 import com.example.myfinances.auth.signup.SignUpScreen;
-import com.example.myfinances.services.AuthServiceService;
+import com.example.myfinances.services.AuthService;
 import com.example.myfinances.services.auth.mappers.SignInMapper;
 
 import java.util.HashMap;
@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class SignInScreen extends AppCompatActivity {
     private final Map<Integer, Reaction> httpStatusesReactions = new HashMap<Integer, Reaction>() {{
@@ -30,6 +31,11 @@ public class SignInScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        if (BuildConfig.DEBUG) {
+//            Timber.plant(new Timber.DebugTree());
+//        }
+
         setContentView(R.layout.activity_sign_in_screen);
 
         final EditText publicData = findViewById(R.id.publicData);
@@ -40,7 +46,7 @@ public class SignInScreen extends AppCompatActivity {
                 startActivity(new Intent(SignInScreen.this, SignUpScreen.class))
         );
 
-        Response<String> response = AuthServiceService.signIn(
+        Response<String> response = AuthService.signIn(
                 SignInMapper.SIGN_IN_MAPPER.userDataToSignInRequest(
                         publicData.getText().toString(),
                         password.getText().toString()
