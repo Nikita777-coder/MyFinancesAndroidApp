@@ -13,14 +13,14 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
 public interface AuthApi {
-    @GET("/auth/signin")
+    @GET("auth/signin")
     Call<String> signIn(@Body SignInRequest signInRequest);
-    @POST("/auth/signup")
+    @POST("auth/signup")
     Call<UserOutData> signUp(@Body SignUpRequest signUpRequest);
-    @POST("/email/send_verification_code")
+    @POST("email/send_verification_code")
     Call<String> sendVerificationCode(@Body String email);
-    @GET("/email/verify")
+    @GET("email/verify")
     Call<String> verifyEmail(@Body EmailVerificationRequest emailVerificationRequest);
-    @PATCH("/user/update_profile")
+    @PATCH("user/update_profile")
     Call<UpdateUserDto> updateUser(@Body UpdateUserDto updateUserDto);
 }

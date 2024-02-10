@@ -13,12 +13,12 @@ import timber.log.Timber;
 
 @UtilityClass
 public class AuthService {
-    private final static AuthApi AUTH_SERVICE_SERVICE = (new Service<>(AuthApi.class)).getController();
+    private final static AuthApi AUTH_SERVICE_SERVICE = (new Service<>(AuthApi.class, "http://10.0.2.2:8080/")).getController();
     public static Response<String> signIn(SignInRequest signInRequest) {
         final Response<String>[] responseOut = new Response[]{null};
 
         AUTH_SERVICE_SERVICE.signIn(signInRequest)
-                .enqueue(new Callback<String>() {
+                .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         Timber.i("signIn response got");
@@ -37,7 +37,7 @@ public class AuthService {
         final Response<UserOutData>[] responseOut = new Response[]{null};
 
         AUTH_SERVICE_SERVICE.signUp(signUpRequest)
-                .enqueue(new Callback<UserOutData>() {
+                .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<UserOutData> call, Response<UserOutData> response) {
                         Timber.i("signUp response got");

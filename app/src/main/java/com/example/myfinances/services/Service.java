@@ -10,7 +10,7 @@ class Service<ApiClass> {
     private final Retrofit mRetrofit;
     private final Class<ApiClass> typeParameterClass;
     private ApiClass controller;
-    public Service(Class<ApiClass> typeParameterClass) {
+    public Service(Class<ApiClass> typeParameterClass, String baseUrl) {
         Timber.i("start init Service");
         this.typeParameterClass = typeParameterClass;
         Timber.i("assign class in Service init");
@@ -27,7 +27,7 @@ class Service<ApiClass> {
 
         Timber.i("start build retrofit");
         mRetrofit = new Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl(baseUrl)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
