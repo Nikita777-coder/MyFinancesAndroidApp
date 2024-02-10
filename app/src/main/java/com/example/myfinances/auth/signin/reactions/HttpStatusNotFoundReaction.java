@@ -1,8 +1,8 @@
 package com.example.myfinances.auth.signin.reactions;
 
-public class HttpStatusBadRequestReaction implements Reaction {
+public class HttpStatusNotFoundReaction implements Reaction {
     @Override
     public void handle(String message) {
-        String param;
+
     }
 }

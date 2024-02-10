@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.myfinances.R;
 import com.example.myfinances.auth.signin.reactions.HttpStatusBadRequestReaction;
+import com.example.myfinances.auth.signin.reactions.HttpStatusNotFoundReaction;
 import com.example.myfinances.auth.signin.reactions.HttpStatusOkReaction;
 import com.example.myfinances.auth.signin.reactions.Reaction;
 import com.example.myfinances.auth.signup.SignUpScreen;
@@ -36,6 +37,7 @@ public class SignInScreen extends AppCompatActivity {
     private final Map<Integer, Reaction> httpStatusesReactions = new HashMap<>() {{
         put(200, new HttpStatusOkReaction());
         put(400, new HttpStatusBadRequestReaction());
+        put(404, new HttpStatusNotFoundReaction());
     }};
 
     /**
@@ -128,6 +130,7 @@ public class SignInScreen extends AppCompatActivity {
                 )
         );
 
-        Objects.requireNonNull(httpStatusesReactions.get(response.code())).handle(response.body());
+//        Objects.requireNonNull(httpStatusesReactions.get(response.code())).handle(response.body());
+        setContentView(R.layout.activity_sign_in_screen);
     }
 }
