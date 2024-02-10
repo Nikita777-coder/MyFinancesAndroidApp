@@ -70,6 +70,7 @@
             android:layout_marginTop="18dp"
             android:hint="@string/public_data_hint"
             android:inputType="text"
+            android:textColor="@color/white"
             android:textColorHint="@color/hint"
             android:textSize="16sp" />
     </RelativeLayout>
@@ -98,6 +99,7 @@
             android:layout_marginTop="18dp"
             android:hint="@string/enter_password"
             android:inputType="textPassword"
+            android:textColor="@color/white"
             android:textColorHint="@color/hint"
             android:textSize="16sp" />
     </RelativeLayout>
