@@ -13,7 +13,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
 public interface AuthApi {
-    @GET("auth/signin")
+    @POST("auth/signin")
     Call<String> signIn(@Body SignInRequest signInRequest);
     @POST("auth/signup")
     Call<UserOutData> signUp(@Body SignUpRequest signUpRequest);
