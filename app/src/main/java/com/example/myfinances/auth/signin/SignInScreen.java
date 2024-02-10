@@ -114,14 +114,11 @@ public class SignInScreen extends AppCompatActivity {
                         signInScreenElementsFlags.put(editText.getId(), false);
                     }
 
-                    enableSignInButton();
+                    signInButton.setEnabled(Boolean.TRUE.equals(signInScreenElementsFlags.get(publicData.getId())) && Boolean.TRUE.equals(signInScreenElementsFlags.get(password.getId())));
 
                     return false; // pass on to other listeners.
                 }
         );
-    }
-    private void enableSignInButton() {
-        signInButton.setEnabled(Boolean.TRUE.equals(signInScreenElementsFlags.get(publicData.getId())) && Boolean.TRUE.equals(signInScreenElementsFlags.get(password.getId())));
     }
     private void activateSignIn() {
         Response<String> response = AuthService.signIn(
