@@ -68,68 +68,60 @@ public class SignInScreen extends AppCompatActivity {
 
         signInScreenElementsFlags.put(publicData.getId(), false);
         signInScreenElementsFlags.put(password.getId(), false);
-        signInScreenElementsFlags.put(signInButton.getId(), false);
 
-        addEditTextListenerAfterAction(publicData);
-        addEditTextListenerAfterAction(password);
+//        addEditTextListenerAfterAction(publicData);
+//        addEditTextListenerAfterAction(password);
         addEditTextCompletionTextListener(publicData);
         addEditTextCompletionTextListener(password);
 
         signInButton.setOnClickListener(view -> {
-            if (Boolean.TRUE.equals(signInScreenElementsFlags.get(signInButton.getId()))) {
-                activateSignIn();
-            }
+            activateSignIn();
         });
     }
-    private void addEditTextListenerAfterAction(EditText editText) {
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                changeBackgroundColorOfSignInButton();
-            }
-        });
-    }
+//    private void addEditTextListenerAfterAction(EditText editText) {
+//        editText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//            }
+//        });
+//    }
     private void addEditTextCompletionTextListener(EditText editText) {
         editText.setOnEditorActionListener(
                 (v, actionId, event) -> {
-                    if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                            actionId == EditorInfo.IME_ACTION_DONE ||
-                            event != null &&
+                    if (event != null &&
                                     event.getAction() == KeyEvent.ACTION_DOWN &&
                                     event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                        if (event == null || !event.isShiftPressed()) {
+                        if (!event.isShiftPressed()) {
                             signInScreenElementsFlags.put(editText.getId(), true);
                             return true; // consume.
                         }
                     }
 
-                    signInScreenElementsFlags.put(editText.getId(), false);
+                    if (event != null
+                            && !editText.getText().toString().equals("")
+                            && event.getAction() != KeyEvent.ACTION_DOWN
+                            && event.getKeyCode() != KeyEvent.KEYCODE_ENTER) {
+                        signInScreenElementsFlags.put(editText.getId(), false);
+                    }
+
+                    enableSignInButton();
+
                     return false; // pass on to other listeners.
                 }
         );
     }
-    private void changeBackgroundColorOfSignInButton() {
-        int color;
-
-        if (Boolean.TRUE.equals(signInScreenElementsFlags.get(publicData.getId())) && Boolean.TRUE.equals(signInScreenElementsFlags.get(password.getId()))) {
-            color = ContextCompat.getColor(this, R.color.activeSignInButton);
-            signInButton.setBackgroundColor(color);
-            signInScreenElementsFlags.put(signInButton.getId(), true);
-        } else {
-            color = ContextCompat.getColor(this, R.color.notActiveSignInButton);
-            signInButton.setBackgroundColor(color);
-            signInScreenElementsFlags.put(signInButton.getId(), false);
-        }
+    private void enableSignInButton() {
+        signInButton.setEnabled(Boolean.TRUE.equals(signInScreenElementsFlags.get(publicData.getId())) && Boolean.TRUE.equals(signInScreenElementsFlags.get(password.getId())));
     }
     private void activateSignIn() {
         Response<String> response = AuthService.signIn(
