@@ -130,7 +130,7 @@ public class SignInScreen extends AppCompatActivity {
                 )
         );
 
-//        Objects.requireNonNull(httpStatusesReactions.get(response.code())).handle(response.body());
+        // Objects.requireNonNull(httpStatusesReactions.get(response.code())).handle(response.body(), this);
         setContentView(R.layout.activity_sign_in_screen);
     }
 }
