@@ -7,4 +7,5 @@
     <color name="hint">#8A8A8A</color>
     <color name="activeSignInButton">#90E800</color>
     <color name="notActiveSignInButton">#609A00</color>
+    <color name="error">#FE5C5C</color>
 </resources>

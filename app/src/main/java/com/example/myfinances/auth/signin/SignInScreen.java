@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -79,6 +81,17 @@ public class SignInScreen extends AppCompatActivity {
         signInButton.setOnClickListener(view -> {
             activateSignIn();
         });
+
+        publicData.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    publicData.setError(null);
+                    publicData.setTextColor(getResources().getColor(R.color.white)); // Исходный цвет текста
+                }
+            }
+        });
+
     }
 //    private void addEditTextListenerAfterAction(EditText editText) {
 //        editText.addTextChangedListener(new TextWatcher() {
@@ -130,7 +143,7 @@ public class SignInScreen extends AppCompatActivity {
                 )
         );
 
-        // Objects.requireNonNull(httpStatusesReactions.get(response.code())).handle(response.body(), this);
+        Objects.requireNonNull(httpStatusesReactions.get(response.code())).handle(response.body(), this);
         setContentView(R.layout.activity_sign_in_screen);
     }
 }
