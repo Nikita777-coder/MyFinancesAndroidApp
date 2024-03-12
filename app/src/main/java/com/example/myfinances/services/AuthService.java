@@ -17,46 +17,7 @@ import timber.log.Timber;
 public class AuthService {
     private final static AuthApi AUTH_SERVICE_SERVICE = (new Service<>(AuthApi.class, "http://10.0.2.2:8080/")).getController();
     public static Response<String> signIn(SignInRequest signInRequest) {
-//        final Response<String>[] responseOut = new Response[]{null};
-//
-//        Callback<String> callback = new Callback<>() {
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                responseOut[0] = response;
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//
-//            }
-//        };
-//
-//        signIn(signInRequest, callback);
-//
-//        return responseOut[0];
-
-        try {
-            var ans = AUTH_SERVICE_SERVICE.signIn(signInRequest).execute();
-            return ans;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private static void signIn(SignInRequest signInRequest, Callback<String> callback) {
-        AUTH_SERVICE_SERVICE.signIn(signInRequest)
-                .enqueue(new Callback<>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        Timber.i("signIn response got");
-                        callback.onResponse(call, response);
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Timber.e(t);
-                        callback.onFailure(call, t);
-                    }
-                });
+        return makeRequest(AUTH_SERVICE_SERVICE.signIn(signInRequest));
     }
     public static Response<UserOutData> signUp(SignUpRequest signUpRequest) {
         final Response<UserOutData>[] responseOut = new Response[]{null};
@@ -76,5 +37,29 @@ public class AuthService {
                 });
 
         return responseOut[0];
+    }
+    private static <T> Response<T> makeRequest(Call<T> method) {
+        final Response<T>[] ans = new Response[1];
+
+        Thread thread = new Thread(() -> {
+            try {
+                try {
+                    ans[0] = method.execute();
+                } catch (IOException | RuntimeException e) {
+                    throw new RuntimeException(e);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException ignore) {
+
+        }
+
+        return ans[0];
     }
 }
