@@ -1,9 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/auth_background"
+    android:gravity="center"
     tools:context=".auth.signup.SignUpScreen">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="30dp"
+        android:text="@string/title"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/sign_up_sign_in_rectangle_border"
+            android:text="@string/sign_up"
+            android:textColor="@color/marine"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/signInPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="105dp"
+            android:text="@string/sign_in"
+            android:textColor="@color/notActiveAuthPage"
+            android:textSize="15dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/rectangle_with_bottom_border">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/email"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="373dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:hint="@string/email_hint"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/hint"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        tools:ignore="MissingClass">
+
+        <ToggleButton
+            android:id="@+id/sendCodeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textOff="@string/send_code_on"
+            android:textColor="@drawable/toggle_button_text_colors"
+            android:onClick="onToggleButtonClicked"
+            android:background="@android:color/transparent"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:textSize="14sp"
+            android:textAllCaps="false"
+            android:gravity="left|center_vertical"
+            android:enabled="false"/>
+
+        <LinearLayout
+            android:id="@+id/verify_code_elements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/code"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:typeface="monospace" />
+
+            <com.goodiebag.pinview.Pinview
+                android:id="@+id/verify_code"
+                app:pinBackground="@drawable/code_element_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="-136dp"
+                app:pinWidth="37dp"
+                app:pinHeight="40dp"
+                app:pinLength="4"
+                app:cursorVisible="false"
+                app:forceKeyboard="true"
+                app:hint="0"
+                app:inputType="text"
+                app:password="false" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signUpBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/sign_up"
+        android:textColor="@drawable/button_text_states"
+        android:textAllCaps="false"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_background_states"
+        android:enabled="false">
+    </androidx.appcompat.widget.AppCompatButton>
+
+</LinearLayout>

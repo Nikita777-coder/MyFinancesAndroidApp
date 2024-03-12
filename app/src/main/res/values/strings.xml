@@ -8,4 +8,10 @@
     <string name="sign_in">sign in</string>
     <string name="sign_up">sign up</string>
     <string name="forgot_password">forgot password?</string>
+    <string name="email">Email</string>
+    <string name="email_hint">enter email</string>
+    <string name="send_code_on">send code ></string>
+    <string name="send_code_off">send code ̬̬ᐯ</string>
+    <string name="code">Code</string>
+    <string name="send_code_const_string">send code again</string>
 </resources>

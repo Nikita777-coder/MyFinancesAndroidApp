@@ -1,6 +1,7 @@
 package com.example.myfinances.services;
 
 import com.example.myfinances.services.auth.AuthApi;
+import com.example.myfinances.services.auth.dto.EmailVerificationRequest;
 import com.example.myfinances.services.auth.dto.SignInRequest;
 import com.example.myfinances.services.auth.dto.SignUpRequest;
 import com.example.myfinances.services.auth.dto.UserOutData;
@@ -20,23 +21,13 @@ public class AuthService {
         return makeRequest(AUTH_SERVICE_SERVICE.signIn(signInRequest));
     }
     public static Response<UserOutData> signUp(SignUpRequest signUpRequest) {
-        final Response<UserOutData>[] responseOut = new Response[]{null};
-
-        AUTH_SERVICE_SERVICE.signUp(signUpRequest)
-                .enqueue(new Callback<>() {
-                    @Override
-                    public void onResponse(Call<UserOutData> call, Response<UserOutData> response) {
-                        Timber.i("signUp response got");
-                        responseOut[0] = response;
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserOutData> call, Throwable t) {
-                        Timber.e(t);
-                    }
-                });
-
-        return responseOut[0];
+        return makeRequest(AUTH_SERVICE_SERVICE.signUp(signUpRequest));
+    }
+    public static Response<String> sendEmailVerificationCode(String email) {
+        return makeRequest(AUTH_SERVICE_SERVICE.sendVerificationCode(email));
+    }
+    public static Response<String> verifyEmail(EmailVerificationRequest request) {
+        return makeRequest(AUTH_SERVICE_SERVICE.verifyEmail(request));
     }
     private static <T> Response<T> makeRequest(Call<T> method) {
         final Response<T>[] ans = new Response[1];

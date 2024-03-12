@@ -2,16 +2,11 @@ package com.example.myfinances.auth.signin;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -28,9 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import retrofit2.Response;
-import timber.log.Timber;
 
 public class SignInScreen extends AppCompatActivity {
     private EditText publicData;
@@ -144,6 +137,5 @@ public class SignInScreen extends AppCompatActivity {
         );
 
         Objects.requireNonNull(httpStatusesReactions.get(response.code())).handle(response.body(), this);
-        setContentView(R.layout.activity_sign_in_screen);
     }
 }

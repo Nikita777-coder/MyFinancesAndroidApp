@@ -8,4 +8,6 @@
     <color name="activeSignInButton">#90E800</color>
     <color name="notActiveSignInButton">#609A00</color>
     <color name="error">#FE5C5C</color>
+    <color name="border_color">#FFFEFE</color>
+    <color name="send_code">#A6A6A6</color>
 </resources>
