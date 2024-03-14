@@ -121,8 +121,8 @@
                 app:pinWidth="37dp"
                 app:pinHeight="40dp"
                 app:pinLength="4"
-                app:cursorVisible="false"
-                app:forceKeyboard="false"
+                app:cursorVisible="true"
+                app:forceKeyboard="true"
                 app:inputType="text"
                 app:password="false" />
         </LinearLayout>

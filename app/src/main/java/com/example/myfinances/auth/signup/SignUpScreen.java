@@ -37,7 +37,7 @@ public class SignUpScreen extends AppCompatActivity {
     private AppCompatButton signUpButton;
     private LinearLayout verifyCodeElements;
     private CharSequence defaultTextOfSendCodeView;
-    private final int totalSeconds = 10;
+    private final int totalSeconds = 60;
     private final int updateInterval = 1000;
     private TextView sendCodeView;
 //    private Map<Integer, Reaction> httpStatusesReactions = new HashMap<>() {{
@@ -67,11 +67,15 @@ public class SignUpScreen extends AppCompatActivity {
         signUpButton.setOnClickListener(view -> activateSignUpBtn());
 
         addEditTextCompletionTextListener(email);
-        pinview.setPinViewEventListener((pinview, fromUser) ->
-                Toast.makeText(SignUpScreen.this, pinview.getValue(), Toast.LENGTH_SHORT).show());
+        pinview.setPinViewEventListener((pinview, fromUser) -> {
+            if (pinview.getValue().length() == 4) {
+                signUpButton.setEnabled(true);
+            }
 
-        pinview.setPinViewEventListener((pinview, fromUser) ->
-                signUpButton.setEnabled(pinview.getValue().length() == pinview.getPinLength()));
+            Toast.makeText(SignUpScreen.this, pinview.getValue(), Toast.LENGTH_SHORT).show();
+        });
+
+        pinview.setTextColor(getResources().getColor(R.color.white));
 
         sendCodeView.setOnClickListener(
                 v -> {
@@ -115,9 +119,10 @@ public class SignUpScreen extends AppCompatActivity {
                             event.getAction() == KeyEvent.ACTION_DOWN &&
                             event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                         if (!event.isShiftPressed()) {
-                            if (!checkEmail()) {
+                            if (!isEmail()) {
                                 return true;
                             }
+
                             sendCodeView.setEnabled(true);
                             return true; // consume.
                         }
@@ -142,7 +147,7 @@ public class SignUpScreen extends AppCompatActivity {
         Response<String> verifyResponse = AuthService.verifyEmail(emailVerificationRequest);
 
     }
-    private boolean checkEmail() {
+    private boolean isEmail() {
         if (!email.getText().toString().matches("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) {
             email.setError("The email string is not email");
             return false;
