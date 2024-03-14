@@ -39,6 +39,7 @@ public class SignUpScreen extends AppCompatActivity {
     private final int totalSeconds = 60;
     private final int updateInterval = 1000;
     private TextView sendCodeView;
+    private TextView  verifyErrorMessage;
     private Map<Integer, HttpReactionInterface> httpStatusesReactions = new HashMap<>() {{
         put(200, new HttpStatusOkReaction());
         put(400, new HttpStatusBadRequestReaction());
@@ -88,6 +89,9 @@ public class SignUpScreen extends AppCompatActivity {
             @Override
             public void onFinish() {
                 verifyCodeElements.setVisibility(View.GONE);
+                pinview.setPinBackgroundRes(R.drawable.code_element_background);
+                pinview.clearValue();
+                findViewById(R.id.verify_error_message).setVisibility(View.GONE);
                 sendCodeView.setText(defaultTextOfSendCodeView);
                 sendCodeView.setTextColor(getResources().getColor(R.color.white));
                 sendCodeView.setClickable(true);
@@ -145,29 +149,6 @@ public class SignUpScreen extends AppCompatActivity {
         });
 
         pinview.setTextColor(getResources().getColor(R.color.white));
-
-//        pinview.setPinViewEventListener((pinview, fromUser) -> {
-//            if (fromUser && !pinview.hasFocus()) {
-//                pinview.setPinBackgroundRes(R.drawable.code_element_background);
-//                TextView verifyErrorMessage = findViewById(R.id.verify_error_message);
-//                verifyErrorMessage.setVisibility(View.GONE);
-//                pinview.showCursor(true);
-//            }
-//        });
-
-        pinview.setPinViewEventListener(new Pinview.PinViewEventListener() {
-            @Override
-            public void onDataEntered(Pinview pinview, boolean fromUser) {
-                // Метод вызывается при изменении значения ввода
-
-                if (fromUser) {
-                    pinview.setPinBackgroundRes(R.drawable.code_element_background);
-                    TextView verifyErrorMessage = findViewById(R.id.verify_error_message);
-                    verifyErrorMessage.setVisibility(View.GONE);
-                    pinview.showCursor(true);
-                }
-            }
-        });
     }
     private void setupSendCodeView() {
         sendCodeView.setOnClickListener(
@@ -184,5 +165,6 @@ public class SignUpScreen extends AppCompatActivity {
         signUpButton = findViewById(R.id.signUpBtn);
         sendCodeView = findViewById(R.id.sendCodeView);
         verifyCodeElements = findViewById(R.id.verify_code_elements);
+        verifyErrorMessage = findViewById(R.id.verify_error_message);
     }
 }
