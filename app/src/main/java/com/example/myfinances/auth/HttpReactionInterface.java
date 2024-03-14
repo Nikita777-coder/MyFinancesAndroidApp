@@ -1,7 +1,7 @@
-package com.example.myfinances.auth.signin.reactions;
+package com.example.myfinances.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public interface Reaction {
+public interface HttpReactionInterface {
     void handle(String message, AppCompatActivity activity);
 }

@@ -11,10 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myfinances.R;
-import com.example.myfinances.auth.signin.reactions.HttpStatusBadRequestReaction;
-import com.example.myfinances.auth.signin.reactions.HttpStatusNotFoundReaction;
-import com.example.myfinances.auth.signin.reactions.HttpStatusOkReaction;
-import com.example.myfinances.auth.signin.reactions.Reaction;
+import com.example.myfinances.auth.signin.httpreactions.HttpStatusBadRequestReaction;
+import com.example.myfinances.auth.signin.httpreactions.HttpStatusNotFoundReaction;
+import com.example.myfinances.auth.signin.httpreactions.HttpStatusOkReaction;
+import com.example.myfinances.auth.HttpReactionInterface;
 import com.example.myfinances.auth.signup.SignUpScreen;
 import com.example.myfinances.services.AuthService;
 import com.example.myfinances.services.auth.mappers.SignInMapper;
@@ -29,7 +29,7 @@ public class SignInScreen extends AppCompatActivity {
     private EditText publicData;
     private EditText password;
     private AppCompatButton signInButton;
-    private final Map<Integer, Reaction> httpStatusesReactions = new HashMap<>() {{
+    private final Map<Integer, HttpReactionInterface> httpStatusesReactions = new HashMap<>() {{
         put(200, new HttpStatusOkReaction());
         put(400, new HttpStatusBadRequestReaction());
         put(404, new HttpStatusNotFoundReaction());

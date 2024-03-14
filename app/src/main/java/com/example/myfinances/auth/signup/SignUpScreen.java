@@ -12,22 +12,21 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.example.myfinances.R;
-import com.example.myfinances.auth.signin.reactions.HttpStatusBadRequestReaction;
-import com.example.myfinances.auth.signin.reactions.HttpStatusNotFoundReaction;
-import com.example.myfinances.auth.signin.reactions.HttpStatusOkReaction;
-import com.example.myfinances.auth.signin.reactions.Reaction;
+import com.example.myfinances.auth.HttpReactionInterface;
 import com.example.myfinances.auth.signin.SignInScreen;
+import com.example.myfinances.auth.signup.httpreactions.HttpStatusBadRequestReaction;
+import com.example.myfinances.auth.signup.httpreactions.HttpStatusForbiddenReaction;
+import com.example.myfinances.auth.signup.httpreactions.HttpStatusNotFoundReaction;
+import com.example.myfinances.auth.signup.httpreactions.HttpStatusOkReaction;
 import com.example.myfinances.services.AuthService;
 import com.example.myfinances.services.auth.dto.EmailVerificationRequest;
 import com.goodiebag.pinview.Pinview;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Objects;
 
 import retrofit2.Response;
 
@@ -40,12 +39,12 @@ public class SignUpScreen extends AppCompatActivity {
     private final int totalSeconds = 60;
     private final int updateInterval = 1000;
     private TextView sendCodeView;
-//    private Map<Integer, Reaction> httpStatusesReactions = new HashMap<>() {{
-//        put(200, new HttpStatusOkReaction());
-//        put(400, new HttpStatusBadRequestReaction());
-//        put(404, new HttpStatusNotFoundReaction());
-//        put(403, new HttpStatusForbiddenReaction());
-//    }};
+    private Map<Integer, HttpReactionInterface> httpStatusesReactions = new HashMap<>() {{
+        put(200, new HttpStatusOkReaction());
+        put(400, new HttpStatusBadRequestReaction());
+        put(404, new HttpStatusNotFoundReaction());
+        put(403, new HttpStatusForbiddenReaction());
+    }};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,37 +52,21 @@ public class SignUpScreen extends AppCompatActivity {
         setupScreenElements();
     }
     private void setupScreenElements() {
-        email = findViewById(R.id.email);
-        pinview = findViewById(R.id.verify_code);
-        signUpButton = findViewById(R.id.signUpBtn);
-        sendCodeView = findViewById(R.id.sendCodeView);
-        verifyCodeElements = findViewById(R.id.verify_code_elements);
-        final TextView signInPage = findViewById(R.id.signInPage);
+        initElements();
 
+        final TextView signInPage = findViewById(R.id.signInPage);
         signInPage.setOnClickListener(view ->
                 startActivity(new Intent(SignUpScreen.this, SignInScreen.class))
         );
 
-        signUpButton.setOnClickListener(view -> activateSignUpBtn());
-
-        addEditTextCompletionTextListener(email);
-        pinview.setPinViewEventListener((pinview, fromUser) -> {
-            if (pinview.getValue().length() == 4) {
-                signUpButton.setEnabled(true);
-            }
-
-            Toast.makeText(SignUpScreen.this, pinview.getValue(), Toast.LENGTH_SHORT).show();
-        });
-
-        pinview.setTextColor(getResources().getColor(R.color.white));
-
-        sendCodeView.setOnClickListener(
-                v -> {
-                    onToggleButtonClicked();
-                }
+        signUpButton.setOnClickListener(view ->
+                startActivity(new Intent(SignUpScreen.this, SignUpPasswordScreen.class))
         );
 
-        defaultTextOfSendCodeView = sendCodeView.getText();
+        setupPinview();
+        setupSendCodeView();
+
+        addEditTextCompletionTextListener(email);
     }
     private void onToggleButtonClicked() {
         AuthService.sendEmailVerificationCode(email.getText().toString());
@@ -142,11 +125,6 @@ public class SignUpScreen extends AppCompatActivity {
     private String getTime(int time) {
         return time <= 9 ? "0" + time : String.valueOf(time);
     }
-    private void activateSignUpBtn() {
-        EmailVerificationRequest emailVerificationRequest = new EmailVerificationRequest(email.getText().toString(), pinview.getValue());
-        Response<String> verifyResponse = AuthService.verifyEmail(emailVerificationRequest);
-
-    }
     private boolean isEmail() {
         if (!email.getText().toString().matches("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) {
             email.setError("The email string is not email");
@@ -154,5 +132,57 @@ public class SignUpScreen extends AppCompatActivity {
         }
 
         return true;
+    }
+    private void setupPinview() {
+        pinview.setPinViewEventListener((pinview, fromUser) -> {
+            if (pinview.getValue().length() == 4) {
+                var request = new EmailVerificationRequest(email.getText().toString(), pinview.getValue());
+                Response<String> verifyResponse = AuthService.verifyEmail(request);
+                Objects.requireNonNull(httpStatusesReactions.get(verifyResponse.code())).handle(verifyResponse.body(), this);
+            }
+
+            Toast.makeText(SignUpScreen.this, pinview.getValue(), Toast.LENGTH_SHORT).show();
+        });
+
+        pinview.setTextColor(getResources().getColor(R.color.white));
+
+//        pinview.setPinViewEventListener((pinview, fromUser) -> {
+//            if (fromUser && !pinview.hasFocus()) {
+//                pinview.setPinBackgroundRes(R.drawable.code_element_background);
+//                TextView verifyErrorMessage = findViewById(R.id.verify_error_message);
+//                verifyErrorMessage.setVisibility(View.GONE);
+//                pinview.showCursor(true);
+//            }
+//        });
+
+        pinview.setPinViewEventListener(new Pinview.PinViewEventListener() {
+            @Override
+            public void onDataEntered(Pinview pinview, boolean fromUser) {
+                // Метод вызывается при изменении значения ввода
+
+                if (fromUser) {
+                    pinview.setPinBackgroundRes(R.drawable.code_element_background);
+                    TextView verifyErrorMessage = findViewById(R.id.verify_error_message);
+                    verifyErrorMessage.setVisibility(View.GONE);
+                    pinview.showCursor(true);
+                }
+            }
+        });
+    }
+    private void setupSendCodeView() {
+        sendCodeView.setOnClickListener(
+                v -> {
+                    onToggleButtonClicked();
+                }
+        );
+
+        defaultTextOfSendCodeView = sendCodeView.getText();
+    }
+    private void initElements() {
+        email = findViewById(R.id.email);
+        pinview = findViewById(R.id.verify_code);
+        signUpButton = findViewById(R.id.signUpBtn);
+        sendCodeView = findViewById(R.id.sendCodeView);
+        verifyCodeElements = findViewById(R.id.verify_code_elements);
     }
 }

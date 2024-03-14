@@ -19,7 +19,7 @@ public interface AuthApi {
     Call<UserOutData> signUp(@Body SignUpRequest signUpRequest);
     @POST("email/send_verification_code")
     Call<String> sendVerificationCode(@Body String email);
-    @GET("email/verify")
+    @POST("email/verify")
     Call<String> verifyEmail(@Body EmailVerificationRequest emailVerificationRequest);
     @PATCH("user/update_profile")
     Call<UpdateUserDto> updateUser(@Body UpdateUserDto updateUserDto);

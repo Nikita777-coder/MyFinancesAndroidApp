@@ -125,6 +125,15 @@
                 app:forceKeyboard="true"
                 app:inputType="text"
                 app:password="false" />
+
+            <TextView
+                android:id="@+id/verify_error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/verify_error_message"
+                android:textColor="@color/error"
+                android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
 

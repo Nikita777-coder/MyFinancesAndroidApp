@@ -27,7 +27,14 @@ public class AuthService {
         return makeRequest(AUTH_SERVICE_SERVICE.sendVerificationCode(email));
     }
     public static Response<String> verifyEmail(EmailVerificationRequest request) {
-        return makeRequest(AUTH_SERVICE_SERVICE.verifyEmail(request));
+        Call<String> method = null;
+
+        try {
+            method = AUTH_SERVICE_SERVICE.verifyEmail(request);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return makeRequest(method);
     }
     private static <T> Response<T> makeRequest(Call<T> method) {
         final Response<T>[] ans = new Response[1];
@@ -36,11 +43,11 @@ public class AuthService {
             try {
                 try {
                     ans[0] = method.execute();
-                } catch (IOException | RuntimeException e) {
-                    e.printStackTrace();
+                } catch (IOException | RuntimeException ignore) {
+//                    e.printStackTrace();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         });
 
@@ -48,7 +55,7 @@ public class AuthService {
         try {
             thread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         return ans[0];
