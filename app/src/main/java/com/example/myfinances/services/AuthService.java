@@ -37,7 +37,7 @@ public class AuthService {
                 try {
                     ans[0] = method.execute();
                 } catch (IOException | RuntimeException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -47,8 +47,8 @@ public class AuthService {
         thread.start();
         try {
             thread.join();
-        } catch (InterruptedException ignore) {
-
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         return ans[0];

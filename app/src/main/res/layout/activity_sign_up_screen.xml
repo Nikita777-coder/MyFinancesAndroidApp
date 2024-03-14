@@ -83,20 +83,14 @@
         android:layout_marginEnd="20dp"
         tools:ignore="MissingClass">
 
-        <ToggleButton
-            android:id="@+id/sendCodeButton"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/sendCodeView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="@string/send_code_on"
+            android:text="@string/send_code_on"
             android:textColor="@drawable/toggle_button_text_colors"
-            android:onClick="onToggleButtonClicked"
-            android:background="@android:color/transparent"
-            android:textStyle="bold"
-            android:typeface="monospace"
-            android:textSize="14sp"
-            android:textAllCaps="false"
-            android:gravity="left|center_vertical"
-            android:enabled="false"/>
+            android:enabled="false"
+            />
 
         <LinearLayout
             android:id="@+id/verify_code_elements"
@@ -120,16 +114,15 @@
 
             <com.goodiebag.pinview.Pinview
                 android:id="@+id/verify_code"
-                app:pinBackground="@drawable/code_element_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="-136dp"
+                app:pinBackground="@drawable/code_element_background"
                 app:pinWidth="37dp"
                 app:pinHeight="40dp"
                 app:pinLength="4"
                 app:cursorVisible="false"
-                app:forceKeyboard="true"
-                app:hint="0"
+                app:forceKeyboard="false"
                 app:inputType="text"
                 app:password="false" />
         </LinearLayout>
@@ -150,3 +143,4 @@
     </androidx.appcompat.widget.AppCompatButton>
 
 </LinearLayout>
+    <!--                app:pinBackground=""-->

@@ -12,9 +12,4 @@ import lombok.Setter;
 public class EmailVerificationRequest {
     private String email;
     private String verificationCode;
-
-    public EmailVerificationRequest(String email, String verificationCode) {
-        this.email = email;
-        this.verificationCode = verificationCode;
-    }
 }

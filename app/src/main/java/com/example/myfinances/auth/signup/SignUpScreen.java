@@ -26,6 +26,8 @@ import com.goodiebag.pinview.Pinview;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Response;
 
@@ -34,34 +36,16 @@ public class SignUpScreen extends AppCompatActivity {
     private Pinview pinview;
     private AppCompatButton signUpButton;
     private LinearLayout verifyCodeElements;
-    private ToggleButton sendCodeButton;
+    private CharSequence defaultTextOfSendCodeView;
+    private final int totalSeconds = 10;
+    private final int updateInterval = 1000;
+    private TextView sendCodeView;
 //    private Map<Integer, Reaction> httpStatusesReactions = new HashMap<>() {{
 //        put(200, new HttpStatusOkReaction());
 //        put(400, new HttpStatusBadRequestReaction());
 //        put(404, new HttpStatusNotFoundReaction());
 //        put(403, new HttpStatusForbiddenReaction());
 //    }};
-    public void onToggleButtonClicked() {
-        AuthService.sendEmailVerificationCode(email.getText().toString());
-        new CountDownTimer(60000, 1000) {
-            int time=60;
-            public void onTick(long millisUntilFinished) {
-                verifyCodeElements.setVisibility(View.VISIBLE);
-                int minutes = time / 60;
-                int seconds = time % 60;
-                sendCodeButton.setTextColor(getResources().getColor(R.color.hint));
-                sendCodeButton.setTextOn(String.format("%s %s:%s", getResources().getString(R.string.send_code_const_string), checkDigit(minutes), checkDigit(seconds)));
-                time--;
-            }
-
-            public void onFinish() {
-                verifyCodeElements.setVisibility(View.GONE);
-                sendCodeButton.setTextColor(getResources().getColor(R.color.white));
-                sendCodeButton.setTextOn(sendCodeButton.getTextOff());
-            }
-
-        }.start();
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +56,7 @@ public class SignUpScreen extends AppCompatActivity {
         email = findViewById(R.id.email);
         pinview = findViewById(R.id.verify_code);
         signUpButton = findViewById(R.id.signUpBtn);
-        sendCodeButton = findViewById(R.id.sendCodeButton);
+        sendCodeView = findViewById(R.id.sendCodeView);
         verifyCodeElements = findViewById(R.id.verify_code_elements);
         final TextView signInPage = findViewById(R.id.signInPage);
 
@@ -88,6 +72,41 @@ public class SignUpScreen extends AppCompatActivity {
 
         pinview.setPinViewEventListener((pinview, fromUser) ->
                 signUpButton.setEnabled(pinview.getValue().length() == pinview.getPinLength()));
+
+        sendCodeView.setOnClickListener(
+                v -> {
+                    onToggleButtonClicked();
+                }
+        );
+
+        defaultTextOfSendCodeView = sendCodeView.getText();
+    }
+    private void onToggleButtonClicked() {
+        AuthService.sendEmailVerificationCode(email.getText().toString());
+        verifyCodeElements.setVisibility(View.VISIBLE);
+        sendCodeView.setTextColor(getResources().getColor(R.color.hint));
+        sendCodeView.setClickable(false);
+
+        new CountDownTimer(totalSeconds * 1000L, updateInterval) {
+            int time = totalSeconds;
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int minutes = time / 60;
+                int seconds = time % 60;
+                sendCodeView.setText(String.format("%s %s:%s", getResources().getString(R.string.send_code_const_string), getTime(minutes), getTime(seconds)));
+                time--;
+            }
+
+            @Override
+            public void onFinish() {
+                verifyCodeElements.setVisibility(View.GONE);
+                sendCodeView.setText(defaultTextOfSendCodeView);
+                sendCodeView.setTextColor(getResources().getColor(R.color.white));
+                sendCodeView.setClickable(true);
+            }
+        }.start();
+
     }
     private void addEditTextCompletionTextListener(EditText editText) {
         editText.setOnEditorActionListener(
@@ -99,7 +118,7 @@ public class SignUpScreen extends AppCompatActivity {
                             if (!checkEmail()) {
                                 return true;
                             }
-                            sendCodeButton.setEnabled(true);
+                            sendCodeView.setEnabled(true);
                             return true; // consume.
                         }
                     }
@@ -108,16 +127,15 @@ public class SignUpScreen extends AppCompatActivity {
                             && !editText.getText().toString().equals("")
                             && event.getAction() != KeyEvent.ACTION_DOWN
                             && event.getKeyCode() != KeyEvent.KEYCODE_ENTER) {
-                        sendCodeButton.setEnabled(false);
+                        sendCodeView.setEnabled(false);
                     }
 
                     return false; // pass on to other listeners.
                 }
         );
     }
-
-    private String checkDigit(int number) {
-        return number <= 9 ? "0" + number : String.valueOf(number);
+    private String getTime(int time) {
+        return time <= 9 ? "0" + time : String.valueOf(time);
     }
     private void activateSignUpBtn() {
         EmailVerificationRequest emailVerificationRequest = new EmailVerificationRequest(email.getText().toString(), pinview.getValue());
