@@ -44,7 +44,7 @@ public class AuthService {
                 try {
                     ans[0] = method.execute();
                 } catch (IOException | RuntimeException ignore) {
-//                    e.printStackTrace();
+                    ignore.printStackTrace();
                 }
             } catch (Exception e) {
 //                e.printStackTrace();

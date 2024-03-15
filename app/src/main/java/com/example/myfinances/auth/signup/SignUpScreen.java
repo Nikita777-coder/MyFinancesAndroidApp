@@ -16,10 +16,10 @@ import android.widget.Toast;
 import com.example.myfinances.R;
 import com.example.myfinances.auth.HttpReactionInterface;
 import com.example.myfinances.auth.signin.SignInScreen;
-import com.example.myfinances.auth.signup.httpreactions.HttpStatusBadRequestReaction;
-import com.example.myfinances.auth.signup.httpreactions.HttpStatusForbiddenReaction;
-import com.example.myfinances.auth.signup.httpreactions.HttpStatusNotFoundReaction;
-import com.example.myfinances.auth.signup.httpreactions.HttpStatusOkReaction;
+import com.example.myfinances.auth.signup.httpreactions.signuppage.HttpStatusBadRequestReaction;
+import com.example.myfinances.auth.signup.httpreactions.signuppage.HttpStatusForbiddenReaction;
+import com.example.myfinances.auth.signup.httpreactions.signuppage.HttpStatusNotFoundReaction;
+import com.example.myfinances.auth.signup.httpreactions.signuppage.HttpStatusOkReaction;
 import com.example.myfinances.services.AuthService;
 import com.example.myfinances.services.auth.dto.EmailVerificationRequest;
 import com.goodiebag.pinview.Pinview;
@@ -39,6 +39,7 @@ public class SignUpScreen extends AppCompatActivity {
     private final int totalSeconds = 60;
     private final int updateInterval = 1000;
     private TextView sendCodeView;
+    private Intent intent;
     private TextView  verifyErrorMessage;
     private Map<Integer, HttpReactionInterface> httpStatusesReactions = new HashMap<>() {{
         put(200, new HttpStatusOkReaction());
@@ -60,8 +61,9 @@ public class SignUpScreen extends AppCompatActivity {
                 startActivity(new Intent(SignUpScreen.this, SignInScreen.class))
         );
 
+        intent = new Intent(this, SignUpPasswordScreen.class);
         signUpButton.setOnClickListener(view ->
-                startActivity(new Intent(SignUpScreen.this, SignUpPasswordScreen.class))
+                startActivity(intent)
         );
 
         setupPinview();
@@ -142,6 +144,7 @@ public class SignUpScreen extends AppCompatActivity {
             if (pinview.getValue().length() == 4) {
                 var request = new EmailVerificationRequest(email.getText().toString(), pinview.getValue());
                 Response<String> verifyResponse = AuthService.verifyEmail(request);
+                intent.putExtra("email", email.getText().toString());
                 Objects.requireNonNull(httpStatusesReactions.get(verifyResponse.code())).handle(verifyResponse.body(), this);
             }
 

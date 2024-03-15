@@ -15,4 +15,9 @@
     <string name="code">Code</string>
     <string name="send_code_const_string">send code again</string>
     <string name="verify_error_message">Incorrect code! Try again</string>
+    <string name="create_password_text">Create password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="repeat_enter_password">repeat password</string>
+    <string name="repeat_password_error">repeat password does not match to initial password</string>
+    <string name="user_exists">user with this email exists</string>
 </resources>
