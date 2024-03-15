@@ -1,5 +1,8 @@
 package com.example.myfinances.services;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
@@ -25,11 +28,15 @@ class Service<ApiClass> {
                 }).build();
         Timber.i("OkHttpClient built");
 
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         Timber.i("start build retrofit");
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         Timber.i("retrofit built");
     }

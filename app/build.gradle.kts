@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.com.fasterxml.jackson.core.JsonPointer.compile
+
 plugins {
     id("com.android.application")
 }
@@ -44,6 +46,7 @@ dependencies {
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.0.Beta1")
     implementation("org.projectlombok:lombok:1.18.30")
     implementation("com.github.GoodieBag:Pinview:v1.4")
+    compileOnly("com.google.code.gson:gson:2.6.1")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
