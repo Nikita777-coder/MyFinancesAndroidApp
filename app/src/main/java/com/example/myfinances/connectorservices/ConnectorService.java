@@ -1,4 +1,4 @@
-package com.example.myfinances.services;
+package com.example.myfinances.connectorservices;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,11 +9,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
-class Service<ApiClass> {
+class ConnectorService<ApiClass> {
     private final Retrofit mRetrofit;
     private final Class<ApiClass> typeParameterClass;
     private ApiClass controller;
-    public Service(Class<ApiClass> typeParameterClass, String baseUrl) {
+    public ConnectorService(Class<ApiClass> typeParameterClass, String baseUrl) {
         Timber.i("start init Service");
         this.typeParameterClass = typeParameterClass;
         Timber.i("assign class in Service init");

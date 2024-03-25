@@ -1,4 +1,4 @@
-package com.example.myfinances.auth.signup;
+package com.example.myfinances.auth.signup.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -12,8 +12,8 @@ import com.example.myfinances.R;
 import com.example.myfinances.auth.HttpReactionInterface;
 import com.example.myfinances.auth.signup.httpreactions.signuppassword.HttpStatusBadRequestReaction;
 import com.example.myfinances.auth.signup.httpreactions.signuppassword.HttpStatusOkReaction;
-import com.example.myfinances.services.AuthService;
-import com.example.myfinances.services.auth.dto.SignUpRequest;
+import com.example.myfinances.connectorservices.AuthConnectorService;
+import com.example.myfinances.connectorservices.auth.dto.SignUpRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,6 @@ import java.util.Map;
 public class SignUpPasswordScreen extends AppCompatActivity {
     private EditText createPassword;
     private EditText repeatPassword;
-    private TextView errorTextView;
     private AppCompatButton signUpBtn;
     private final Map<Integer, Boolean> signInScreenElementsFlags = new HashMap<>();
     private Map<Integer, HttpReactionInterface> httpStatusesReactions = new HashMap<>() {{
@@ -50,7 +49,6 @@ public class SignUpPasswordScreen extends AppCompatActivity {
         createPassword = findViewById(R.id.createPassword);
         repeatPassword = findViewById(R.id.repeatPassword);
         signUpBtn = findViewById(R.id.signUpBtn);
-        errorTextView = findViewById(R.id.error_text_view);
     }
     private void addEditTextCompletionTextListener(EditText editText) {
         editText.setOnEditorActionListener(
@@ -87,7 +85,7 @@ public class SignUpPasswordScreen extends AppCompatActivity {
     }
     private void activateSignUpBtn() {
         SignUpRequest signUpRequest = new SignUpRequest(this.getIntent().getStringExtra("email"), repeatPassword.getText().toString());
-        var response = AuthService.signUp(signUpRequest);
+        var response = AuthConnectorService.signUp(signUpRequest);
         httpStatusesReactions.get(response.code()).handle("", this);
     }
 }

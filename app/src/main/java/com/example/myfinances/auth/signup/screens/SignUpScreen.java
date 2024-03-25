@@ -1,4 +1,4 @@
-package com.example.myfinances.auth.signup;
+package com.example.myfinances.auth.signup.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -15,13 +15,13 @@ import android.widget.Toast;
 
 import com.example.myfinances.R;
 import com.example.myfinances.auth.HttpReactionInterface;
-import com.example.myfinances.auth.signin.SignInScreen;
+import com.example.myfinances.auth.signin.screens.SignInScreen;
 import com.example.myfinances.auth.signup.httpreactions.signuppage.HttpStatusBadRequestReaction;
 import com.example.myfinances.auth.signup.httpreactions.signuppage.HttpStatusForbiddenReaction;
 import com.example.myfinances.auth.signup.httpreactions.signuppage.HttpStatusNotFoundReaction;
 import com.example.myfinances.auth.signup.httpreactions.signuppage.HttpStatusOkReaction;
-import com.example.myfinances.services.AuthService;
-import com.example.myfinances.services.auth.dto.EmailVerificationRequest;
+import com.example.myfinances.connectorservices.AuthConnectorService;
+import com.example.myfinances.connectorservices.auth.dto.EmailVerificationRequest;
 import com.goodiebag.pinview.Pinview;
 
 import java.util.HashMap;
@@ -35,12 +35,10 @@ public class SignUpScreen extends AppCompatActivity {
     private Pinview pinview;
     private AppCompatButton signUpButton;
     private LinearLayout verifyCodeElements;
-    private CharSequence defaultTextOfSendCodeView;
     private final int totalSeconds = 60;
     private final int updateInterval = 1000;
     private TextView sendCodeView;
-    private Intent intent;
-    private TextView  verifyErrorMessage;
+    private Intent passwordPageIntent;
     private Map<Integer, HttpReactionInterface> httpStatusesReactions = new HashMap<>() {{
         put(200, new HttpStatusOkReaction());
         put(400, new HttpStatusBadRequestReaction());
@@ -61,9 +59,9 @@ public class SignUpScreen extends AppCompatActivity {
                 startActivity(new Intent(SignUpScreen.this, SignInScreen.class))
         );
 
-        intent = new Intent(this, SignUpPasswordScreen.class);
+        passwordPageIntent = new Intent(this, SignUpPasswordScreen.class);
         signUpButton.setOnClickListener(view ->
-                startActivity(intent)
+                startActivity(passwordPageIntent)
         );
 
         setupPinview();
@@ -72,7 +70,7 @@ public class SignUpScreen extends AppCompatActivity {
         addEditTextCompletionTextListener(email);
     }
     private void onToggleButtonClicked() {
-        AuthService.sendEmailVerificationCode(email.getText().toString());
+        AuthConnectorService.sendEmailVerificationCode(email.getText().toString());
         verifyCodeElements.setVisibility(View.VISIBLE);
         sendCodeView.setTextColor(getResources().getColor(R.color.hint));
         sendCodeView.setClickable(false);
@@ -94,7 +92,7 @@ public class SignUpScreen extends AppCompatActivity {
                 pinview.setPinBackgroundRes(R.drawable.code_element_background);
                 pinview.clearValue();
                 findViewById(R.id.verify_error_message).setVisibility(View.GONE);
-                sendCodeView.setText(defaultTextOfSendCodeView);
+                sendCodeView.setText(getResources().getText(R.string.send_code_const_string));
                 sendCodeView.setTextColor(getResources().getColor(R.color.white));
                 sendCodeView.setClickable(true);
             }
@@ -143,8 +141,8 @@ public class SignUpScreen extends AppCompatActivity {
         pinview.setPinViewEventListener((pinview, fromUser) -> {
             if (pinview.getValue().length() == 4) {
                 var request = new EmailVerificationRequest(email.getText().toString(), pinview.getValue());
-                Response<String> verifyResponse = AuthService.verifyEmail(request);
-                intent.putExtra("email", email.getText().toString());
+                Response<String> verifyResponse = AuthConnectorService.verifyEmail(request);
+                passwordPageIntent.putExtra("email", email.getText().toString());
                 Objects.requireNonNull(httpStatusesReactions.get(verifyResponse.code())).handle(verifyResponse.body(), this);
             }
 
@@ -159,8 +157,6 @@ public class SignUpScreen extends AppCompatActivity {
                     onToggleButtonClicked();
                 }
         );
-
-        defaultTextOfSendCodeView = sendCodeView.getText();
     }
     private void initElements() {
         email = findViewById(R.id.email);
@@ -168,6 +164,5 @@ public class SignUpScreen extends AppCompatActivity {
         signUpButton = findViewById(R.id.signUpBtn);
         sendCodeView = findViewById(R.id.sendCodeView);
         verifyCodeElements = findViewById(R.id.verify_code_elements);
-        verifyErrorMessage = findViewById(R.id.verify_error_message);
     }
 }

@@ -1,6 +1,6 @@
-package com.example.myfinances.services.auth.mappers;
+package com.example.myfinances.connectorservices.auth.mappers;
 
-import com.example.myfinances.services.auth.dto.SignInRequest;
+import com.example.myfinances.connectorservices.auth.dto.SignInRequest;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

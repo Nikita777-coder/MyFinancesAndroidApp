@@ -1,4 +1,4 @@
-package com.example.myfinances.auth.signin.httpreactions;
+package com.example.myfinances.auth.signin.httpreactions.signin;
 
 import android.widget.EditText;
 

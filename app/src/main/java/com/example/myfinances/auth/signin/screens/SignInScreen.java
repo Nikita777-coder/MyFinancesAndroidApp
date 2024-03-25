@@ -1,4 +1,4 @@
-package com.example.myfinances.auth.signin;
+package com.example.myfinances.auth.signin.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -11,13 +11,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myfinances.R;
-import com.example.myfinances.auth.signin.httpreactions.HttpStatusBadRequestReaction;
-import com.example.myfinances.auth.signin.httpreactions.HttpStatusNotFoundReaction;
-import com.example.myfinances.auth.signin.httpreactions.HttpStatusOkReaction;
+import com.example.myfinances.auth.signin.httpreactions.signin.HttpStatusBadRequestReaction;
+import com.example.myfinances.auth.signin.httpreactions.signin.HttpStatusNotFoundReaction;
+import com.example.myfinances.auth.signin.httpreactions.signin.HttpStatusOkReaction;
 import com.example.myfinances.auth.HttpReactionInterface;
-import com.example.myfinances.auth.signup.SignUpScreen;
-import com.example.myfinances.services.AuthService;
-import com.example.myfinances.services.auth.mappers.SignInMapper;
+import com.example.myfinances.auth.signin.screens.forgotpassword.ForgotPasswordScreen;
+import com.example.myfinances.auth.signup.screens.SignUpScreen;
+import com.example.myfinances.connectorservices.AuthConnectorService;
+import com.example.myfinances.connectorservices.auth.mappers.SignInMapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,7 @@ public class SignInScreen extends AppCompatActivity {
     private EditText publicData;
     private EditText password;
     private AppCompatButton signInButton;
+    private TextView forgotPassword;
     private final Map<Integer, HttpReactionInterface> httpStatusesReactions = new HashMap<>() {{
         put(200, new HttpStatusOkReaction());
         put(400, new HttpStatusBadRequestReaction());
@@ -62,6 +64,7 @@ public class SignInScreen extends AppCompatActivity {
         publicData = findViewById(R.id.publicData);
         password = findViewById(R.id.password);
         signInButton = findViewById(R.id.signInBtn);
+        forgotPassword = findViewById(R.id.forgotPassword);
 
         signInScreenElementsFlags.put(publicData.getId(), false);
         signInScreenElementsFlags.put(password.getId(), false);
@@ -84,6 +87,8 @@ public class SignInScreen extends AppCompatActivity {
                 }
             }
         });
+
+        forgotPassword.setOnClickListener(view -> startActivity(new Intent(this, ForgotPasswordScreen.class)));
 
     }
 //    private void addEditTextListenerAfterAction(EditText editText) {
@@ -129,7 +134,7 @@ public class SignInScreen extends AppCompatActivity {
         );
     }
     private void activateSignIn() {
-        Response<String> response = AuthService.signIn(
+        Response<String> response = AuthConnectorService.signIn(
                 SignInMapper.SIGN_IN_MAPPER.userDataToSignInRequest(
                         publicData.getText().toString(),
                         password.getText().toString()

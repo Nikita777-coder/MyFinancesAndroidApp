@@ -1,4 +1,4 @@
-package com.example.myfinances.services.auth.dto;
+package com.example.myfinances.connectorservices.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.example.myfinances.services.auth.dto;
+package com.example.myfinances.connectorservices.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class EmailVerificationRequest {
+public class SignInRequest {
+    private String login;
     private String email;
-    private String verificationCode;
+    private String password;
 }

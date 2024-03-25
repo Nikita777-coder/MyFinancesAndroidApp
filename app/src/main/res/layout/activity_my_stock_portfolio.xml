@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_pages_background_color"
+    tools:context=".screens.MyStockPortfolioScreen">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="60dp"
+            android:text="@string/title"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="90dp">
+
+            <ImageButton
+                android:id="@+id/profile_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_centerHorizontal="true"
+                android:onClick="scrollToTop"
+                android:src="@drawable/profile_page"
+                android:background="@android:color/transparent" />
+
+            <TextView
+                android:id="@+id/profile_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_page"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_background"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="@string/my_portfolio_observe"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_portfolio_cost"
+                    android:textSize="14dp"
+                    android:textColor="@color/white"
+                    android:drawableLeft="@drawable/my_portfolio_cost" />
+
+                <TextView
+                    android:id="@+id/my_portfolio_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="3dp"
+                    android:text="0 ₽"
+                    android:textSize="26dp"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/my_portfolio_invest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 ₽ вложено"
+                    android:textSize="14dp"
+                    android:textColor="@color/invested_sum_color"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_portfolio_risk"
+                    android:textSize="14dp"
+                    android:textColor="@color/white"
+                    android:drawableLeft="@drawable/my_portfolio_risk" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/my_portfolio_risk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="3dp"
+                        android:text="0"
+                        android:textSize="26dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/my_portfolio_risk_diff"
+                        android:enabled="false"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="1dp"
+                        android:textSize="24sp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_portfolio_stocks_table_head_title"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/my_portfolio_stocks_table_head_cost"
+                android:textColor="@color/white"
+                android:layout_marginHorizontal="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_portfolio_stocks_table_head_income"
+                android:textColor="@color/white"
+                android:layout_marginHorizontal="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_portfolio_stocks_table_head_proportion"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/default_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_portfolio_table_default_state"
+            android:textColor="@color/notActiveAuthPage"
+            />
+
+        <ScrollView
+            android:id="@+id/stock_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:fillViewport="true">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="4">
+            </TableLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:background="@color/menu_panel">
+
+            <ImageButton
+                android:id="@+id/stocks_page"
+                android:layout_width="42dip"
+                android:layout_height="30dip"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/stocks_page"
+                app:tint="@color/white" />
+
+            <ImageButton
+                android:id="@+id/my_portfolio"
+                android:layout_width="60dip"
+                android:layout_height="60dip"
+                android:background="@drawable/my_portfolio"
+                app:tint="@color/white" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>
