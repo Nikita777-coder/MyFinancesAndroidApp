@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/main_pages_background_color"
-    tools:context=".screens.MyStockPortfolioScreen">
+    tools:context=".activities.MyStockPortfolioScreen">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -134,7 +134,7 @@
                         android:enabled="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/error"
                         android:layout_marginTop="1dp"
                         android:textSize="24sp"/>
                 </LinearLayout>
@@ -150,6 +150,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/stocks_table"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -197,9 +198,9 @@
             android:fillViewport="true">
 
             <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:stretchColumns="4">
+                android:id="@+id/tableLayoutList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             </TableLayout>
         </ScrollView>
     </LinearLayout>
@@ -228,7 +229,7 @@
                 android:layout_width="60dip"
                 android:layout_height="60dip"
                 android:background="@drawable/my_portfolio"
-                app:tint="@color/white" />
+                android:backgroundTint="@color/active_menu_element" />
         </LinearLayout>
 
     </RelativeLayout>

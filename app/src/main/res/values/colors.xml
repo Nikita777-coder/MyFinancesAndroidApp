@@ -16,4 +16,5 @@
     <color name="invested_sum_color">#D6D5D5</color>
     <color name="menu_panel">#383838</color>
     <color name="active_menu_element">#6AF681</color>
+    <color name="stock_element_background">#4B4949</color>
 </resources>

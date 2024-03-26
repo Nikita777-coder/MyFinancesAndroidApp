@@ -1,12 +1,12 @@
 package com.example.myfinances.connectorservices;
 
-import com.example.myfinances.connectorservices.auth.AuthApi;
-import com.example.myfinances.connectorservices.auth.dto.ChangePasswordDto;
-import com.example.myfinances.connectorservices.auth.dto.EmailVerificationRequest;
-import com.example.myfinances.connectorservices.auth.dto.SignInRequest;
-import com.example.myfinances.connectorservices.auth.dto.SignUpRequest;
-import com.example.myfinances.connectorservices.auth.dto.UpdateUserDto;
-import com.example.myfinances.connectorservices.auth.dto.UserOutData;
+import com.example.myfinances.api.AuthApi;
+import com.example.myfinances.dto.ChangePasswordDto;
+import com.example.myfinances.dto.EmailVerificationRequest;
+import com.example.myfinances.dto.SignInRequest;
+import com.example.myfinances.dto.SignUpRequest;
+import com.example.myfinances.dto.UpdateUserDto;
+import com.example.myfinances.dto.UserOutData;
 
 import java.io.IOException;
 
