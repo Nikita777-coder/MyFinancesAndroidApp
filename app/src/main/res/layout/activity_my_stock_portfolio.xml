@@ -190,19 +190,13 @@
             android:textColor="@color/notActiveAuthPage"
             />
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/stock_table"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="275dp"
             android:visibility="gone"
-            android:fillViewport="true">
-
-            <TableLayout
-                android:id="@+id/tableLayoutList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </TableLayout>
-        </ScrollView>
+            android:layout_height="150dp"
+            android:scrollbars="vertical"
+            style="@style/RecyclerViewStockTableStyle"/>
     </LinearLayout>
 
     <RelativeLayout

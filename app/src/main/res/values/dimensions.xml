@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="stock_table_row_height">20dp</dimen>
+    <dimen name="stock_table_row_medium">20dp</dimen>
+    <dimen name="stock_table_row_radius">2dp</dimen>
+</resources>

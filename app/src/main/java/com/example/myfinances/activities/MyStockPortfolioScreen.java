@@ -1,6 +1,8 @@
 package com.example.myfinances.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +18,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.myfinances.R;
+import com.example.myfinances.myelements.MyStockTableAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyStockPortfolioScreen extends AppCompatActivity {
     private TextView profileLogin;
@@ -23,7 +29,7 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
     private TextView myPortfolioRisk, myPortfolioRiskDiff;
     private TextView stockTableDefaultStage;
     private LinearLayout stocksTableHead;
-    private ScrollView stockTable;
+    private RecyclerView stockTable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +48,18 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
         ImageButton stocksPage = findViewById(R.id.stocks_page);
         stocksPage.setOnClickListener(view -> startActivity(new Intent(this, StocksScreen.class)));
 
-        TextView newMyPortfolioStock = generateNewMyPortfolioStock();
-        stockTable.addView(newMyPortfolioStock);
+        stockTable.setLayoutManager(new LinearLayoutManager(this));
+        List<String> data = new ArrayList<>();
+
+        MyStockTableAdapter adapter = new MyStockTableAdapter(data);
+        stockTable.setAdapter(adapter);
+        stockTable.post(() -> stockTable.scrollToPosition(adapter.getItemCount() - 1));
+
+
+//        for (int i = 0; i < 20; ++i) {
+//            data.add("Новый элемент");
+//            adapter.notifyItemInserted(data.size() - 1);
+//        }
     }
     private void initFields() {
         profileLogin = findViewById(R.id.profile_login);
@@ -55,33 +71,4 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
         stockTableDefaultStage = findViewById(R.id.default_state);
         stocksTableHead = findViewById(R.id.stocks_table);
     }
-    private TextView generateNewMyPortfolioStock() {
-        TextView newMyPortfolioStock = new TextView(this);
-        newMyPortfolioStock.setWidth(stocksTableHead.getWidth());
-        newMyPortfolioStock.setHeight(stocksTableHead.getHeight());
-        newMyPortfolioStock.setBackgroundColor(getResources().getColor(R.color.stock_element_background));
-
-        return newMyPortfolioStock;
-    }
-//    private void fillTable(View v, Cursor c) {
-//        TableLayout ll = (TableLayout) findViewById(R.id.tableLayoutList);
-//
-//        View mTableRow = null;
-//        int i = 0;
-//        while(!c.isAfterLast()){
-//            i++;
-//            mTableRow = (TableRow) View.inflate(, R.layout.mRowLayout, null);
-//
-//            CheckBox cb = (CheckBox)mTableRow.findViewById(R.id.checkBoxServEmail);
-//            cb.setText( c.getString(c.getColumnIndex(Empleado.EMAIL)));
-//
-//
-//            mTableRow.setTag(i);
-//
-//            //add TableRows to TableLayout
-//            ll.addView(mTableRow);
-//
-//            c.moveToNext();
-//        }
-//    }
 }

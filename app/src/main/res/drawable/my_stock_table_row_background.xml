@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape
+            android:shape="rectangle"
+            android:padding="10dp">
+
+            <stroke android:width="3px" android:color="@color/black" />
+            <solid android:color="@color/stock_element_background" />
+            <corners
+                android:bottomRightRadius="@dimen/stock_table_row_radius"
+                android:bottomLeftRadius="@dimen/stock_table_row_radius"
+                android:topLeftRadius="@dimen/stock_table_row_radius"
+                android:topRightRadius="@dimen/stock_table_row_radius" />
+        </shape>
+    </item>
+</layer-list>

@@ -17,4 +17,5 @@
     <color name="menu_panel">#383838</color>
     <color name="active_menu_element">#6AF681</color>
     <color name="stock_element_background">#4B4949</color>
+    <color name="table_scroll_color">#D9D9D9</color>
 </resources>
