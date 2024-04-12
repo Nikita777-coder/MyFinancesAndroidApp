@@ -1,21 +1,28 @@
 package com.example.myfinances.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.KeyEvent;
 import android.widget.EditText;
 
 import com.example.myfinances.R;
+import com.example.myfinances.dto.UserOutData;
 import com.example.myfinances.httpreactions.HttpReactionInterface;
 import com.example.myfinances.httpreactions.signuppassword.HttpStatusBadRequestReaction;
-import com.example.myfinances.httpreactions.signuppassword.HttpStatusOkReaction;
+import com.example.myfinances.httpreactions.signuppassword.HttpStatusCreatedReaction;
 import com.example.myfinances.connectorservices.AuthConnectorService;
 import com.example.myfinances.dto.SignUpRequest;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import retrofit2.Response;
 
 public class SignUpPasswordScreen extends AppCompatActivity {
     private EditText createPassword;
@@ -23,7 +30,7 @@ public class SignUpPasswordScreen extends AppCompatActivity {
     private AppCompatButton signUpBtn;
     private final Map<Integer, Boolean> signInScreenElementsFlags = new HashMap<>();
     private Map<Integer, HttpReactionInterface> httpStatusesReactions = new HashMap<>() {{
-        put(200, new HttpStatusOkReaction());
+        put(201, new HttpStatusCreatedReaction());
         put(400, new HttpStatusBadRequestReaction());
     }};
     @Override
@@ -85,6 +92,7 @@ public class SignUpPasswordScreen extends AppCompatActivity {
     private void activateSignUpBtn() {
         SignUpRequest signUpRequest = new SignUpRequest(this.getIntent().getStringExtra("email"), repeatPassword.getText().toString());
         var response = AuthConnectorService.signUp(signUpRequest);
-        httpStatusesReactions.get(response.code()).handle("", this);
+
+        httpStatusesReactions.get(response.code()).handle(response.body(), this);
     }
 }

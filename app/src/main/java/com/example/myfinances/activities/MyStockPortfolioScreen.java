@@ -18,10 +18,13 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.myfinances.R;
+import com.example.myfinances.dto.UserOutData;
 import com.example.myfinances.myelements.MyStockTableAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import forremove.MyStockMockData;
 
 public class MyStockPortfolioScreen extends AppCompatActivity {
     private TextView profileLogin;
@@ -30,6 +33,11 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
     private TextView stockTableDefaultStage;
     private LinearLayout stocksTableHead;
     private RecyclerView stockTable;
+    private List<String> data = new ArrayList<>();
+    private MyStockTableAdapter adapter;
+
+    // to remove
+    private MyStockMockData myStockMockData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,16 +57,15 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
         stocksPage.setOnClickListener(view -> startActivity(new Intent(this, StocksScreen.class)));
 
         stockTable.setLayoutManager(new LinearLayoutManager(this));
-        List<String> data = new ArrayList<>();
 
         MyStockTableAdapter adapter = new MyStockTableAdapter(data);
         stockTable.setAdapter(adapter);
         stockTable.post(() -> stockTable.scrollToPosition(adapter.getItemCount() - 1));
 
+        profileLogin.setText(getProfileLogin());
 
-//        for (int i = 0; i < 20; ++i) {
-//            data.add("Новый элемент");
-//            adapter.notifyItemInserted(data.size() - 1);
+//        if (!getIntent().getStringExtra("email").equals("")) {
+//            curvaStockActivation();
 //        }
     }
     private void initFields() {
@@ -70,5 +77,24 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
         stockTable = findViewById(R.id.stock_table);
         stockTableDefaultStage = findViewById(R.id.default_state);
         stocksTableHead = findViewById(R.id.stocks_table);
+    }
+
+    /**
+     * for removal
+     */
+    private void curvaStockActivation() {
+        for (int i = 0; i < 20; ++i) {
+            data.add("Новый элемент");
+            adapter.notifyItemInserted(data.size() - 1);
+        }
+    }
+    private String getProfileLogin() {
+        UserOutData userData = this.getIntent().getParcelableExtra(getResources().getString(R.string.user_data));
+
+        if (userData.getLogin() == null) {
+            return userData.getEmail();
+        }
+
+        return userData.getLogin();
     }
 }

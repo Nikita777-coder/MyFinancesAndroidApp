@@ -16,7 +16,7 @@ import retrofit2.http.Query;
 
 public interface AuthApi {
     @POST("auth/signin")
-    Call<String> signIn(@Body SignInRequest signInRequest);
+    Call<UserOutData> signIn(@Body SignInRequest signInRequest);
     @POST("auth/signup")
     Call<UserOutData> signUp(@Body SignUpRequest signUpRequest);
     @POST("email/send_verification_code")

@@ -1,11 +1,14 @@
 package com.example.myfinances.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -109,6 +112,11 @@ public class SignUpScreen extends AppCompatActivity {
                                 return true;
                             }
 
+                            if (Boolean.TRUE.equals(AuthConnectorService.isEmailExistsInApp(email.getText().toString()).body())) {
+                                email.setError(getResources().getText(R.string.user_exists));
+                                return true;
+                            }
+
                             sendCodeView.setEnabled(true);
                             return true; // consume.
                         }
@@ -142,7 +150,17 @@ public class SignUpScreen extends AppCompatActivity {
                 var request = new EmailVerificationRequest(email.getText().toString(), pinview.getValue());
                 Response<String> verifyResponse = AuthConnectorService.verifyEmail(request);
                 passwordPageIntent.putExtra("email", email.getText().toString());
-                Objects.requireNonNull(httpStatusesReactions.get(verifyResponse.code())).handle(verifyResponse.body(), this);
+                Objects.requireNonNull(httpStatusesReactions.get(verifyResponse.code())).handle(new Parcelable() {
+                    @Override
+                    public int describeContents() {
+                        return 0;
+                    }
+
+                    @Override
+                    public void writeToParcel(@NonNull Parcel dest, int flags) {
+                        dest.writeString(verifyResponse.body());
+                    }
+                }, this);
             }
 
             Toast.makeText(SignUpScreen.this, pinview.getValue(), Toast.LENGTH_SHORT).show();

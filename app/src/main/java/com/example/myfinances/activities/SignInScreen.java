@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.myfinances.R;
 import com.example.myfinances.activities.forgotpassword.ForgotPasswordScreen;
+import com.example.myfinances.dto.UserOutData;
 import com.example.myfinances.httpreactions.signin.HttpStatusBadRequestReaction;
 import com.example.myfinances.httpreactions.signin.HttpStatusNotFoundReaction;
 import com.example.myfinances.httpreactions.signin.HttpStatusOkReaction;
@@ -133,7 +134,7 @@ public class SignInScreen extends AppCompatActivity {
         );
     }
     private void activateSignIn() {
-        Response<String> response = AuthConnectorService.signIn(
+        Response<UserOutData> response = AuthConnectorService.signIn(
                 SignInMapper.SIGN_IN_MAPPER.userDataToSignInRequest(
                         publicData.getText().toString(),
                         password.getText().toString()

@@ -17,7 +17,7 @@ import retrofit2.Response;
 @UtilityClass
 public class AuthConnectorService {
     private final static AuthApi AUTH_SERVICE_SERVICE = (new ConnectorService<>(AuthApi.class, "http://10.0.2.2:8080/")).getController();
-    public static Response<String> signIn(SignInRequest signInRequest) {
+    public static Response<UserOutData> signIn(SignInRequest signInRequest) {
         return makeRequest(AUTH_SERVICE_SERVICE.signIn(signInRequest));
     }
     public static Response<UserOutData> signUp(SignUpRequest signUpRequest) {
