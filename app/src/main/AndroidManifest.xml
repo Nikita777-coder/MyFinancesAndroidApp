@@ -34,27 +34,29 @@
         <activity
             android:name=".activities.MyStockPortfolioScreen"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".activities.SignUpPasswordScreen"
             android:exported="false" />
         <activity
             android:name=".activities.SignInScreen"
-            android:exported="false" /> <!-- tools:replace="android:appComponentFactory" -->
-        <!-- android:appComponentFactory="androidx" -->
+            android:exported="true" /> <!-- tools:replace="android:appComponentFactory" -->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         <activity
             android:name=".activities.SignUpScreen"
             android:exported="true" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activities.MainActivity"
