@@ -5,24 +5,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.myfinances.R;
+import com.example.myfinances.dto.UserStock;
+import com.example.myfinances.stockproviders.IEXCloudStockProvider;
 import com.example.myfinances.dto.UserOutData;
 import com.example.myfinances.myelements.MyStockTableAdapter;
+import com.example.myfinances.stockproviders.StockProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import forremove.MyStockMockData;
 
@@ -32,12 +30,11 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
     private TextView myPortfolioRisk, myPortfolioRiskDiff;
     private TextView stockTableDefaultStage;
     private LinearLayout stocksTableHead;
+    private StockProvider stockProvider;
     private RecyclerView stockTable;
     private List<String> data = new ArrayList<>();
     private MyStockTableAdapter adapter;
-
-    // to remove
-    private MyStockMockData myStockMockData;
+    private UserOutData userOutData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +60,7 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
         stockTable.post(() -> stockTable.scrollToPosition(adapter.getItemCount() - 1));
 
         profileLogin.setText(getProfileLogin());
-
-//        if (!getIntent().getStringExtra("email").equals("")) {
-//            curvaStockActivation();
-//        }
+        getStocks();
     }
     private void initFields() {
         profileLogin = findViewById(R.id.profile_login);
@@ -77,24 +71,34 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
         stockTable = findViewById(R.id.stock_table);
         stockTableDefaultStage = findViewById(R.id.default_state);
         stocksTableHead = findViewById(R.id.stocks_table);
+        stockProvider = IEXCloudStockProvider.getInstance();
+        userOutData = this.getIntent().getParcelableExtra(getResources().getString(R.string.user_data));
     }
+    private String getProfileLogin() {
+        if (userOutData.getLogin() == null) {
+            return userOutData.getEmail();
+        }
 
-    /**
-     * for removal
-     */
-    private void curvaStockActivation() {
-        for (int i = 0; i < 20; ++i) {
-            data.add("Новый элемент");
+        return userOutData.getLogin();
+    }
+    private void getStocks() {
+        boolean getStocks = new Random().nextBoolean();
+
+        if (!getStocks) {
+            return;
+        }
+
+        List<UserStock> userStocks = stockProvider.getUserStocks(userOutData.getEmail());
+        for (var userStock : userStocks) {
+            data.add(userStockToMyPortfolioString(userStock));
             adapter.notifyItemInserted(data.size() - 1);
         }
     }
-    private String getProfileLogin() {
-        UserOutData userData = this.getIntent().getParcelableExtra(getResources().getString(R.string.user_data));
-
-        if (userData.getLogin() == null) {
-            return userData.getEmail();
-        }
-
-        return userData.getLogin();
+    private String userStockToMyPortfolioString(UserStock userStock) {
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        EditText userStringStock = new EditText(this);
+        userStringStock.
+        return userStringStock.getText().toString();
     }
 }
