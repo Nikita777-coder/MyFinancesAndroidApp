@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
-class ConnectorService<ApiClass> {
+public class ConnectorService<ApiClass> {
     private final Retrofit mRetrofit;
     private final Class<ApiClass> typeParameterClass;
     private ApiClass controller;

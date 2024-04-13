@@ -39,6 +39,7 @@ android {
 dependencies {
 implementation("androidx.navigation:navigation-fragment:2.6.0")
     implementation("androidx.navigation:navigation-ui:2.6.0")
+    implementation("net.jacobpeterson.alpaca:alpaca-java:10.0.1")
     //    implementation("org.slf4j:slf4j-api:2.0.11")
 //    implementation("org.slf4j:slf4j-simple:1.7.30")
 //    implementation("org.apache.logging.log4j:log4j-api:2.22.1")

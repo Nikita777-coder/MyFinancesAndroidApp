@@ -6,8 +6,12 @@ import com.example.myfinances.dto.SignInRequest;
 import com.example.myfinances.dto.SignUpRequest;
 import com.example.myfinances.dto.UpdateUserDto;
 import com.example.myfinances.dto.UserOutData;
+import com.example.myfinances.dto.UserStock;
+
+import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.CallAdapter;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
@@ -17,6 +21,10 @@ import retrofit2.http.Query;
 public interface AuthApi {
     @POST("auth/signin")
     Call<UserOutData> signIn(@Body SignInRequest signInRequest);
+    @POST("")
+    Call<Void> saveUserStocks(@Body List<UserStock> stocks);
+    @GET("")
+    Call<List<UserStock>> getUserStocks(@Query("email") String email);
     @POST("auth/signup")
     Call<UserOutData> signUp(@Body SignUpRequest signUpRequest);
     @POST("email/send_verification_code")

@@ -7,8 +7,10 @@ import com.example.myfinances.dto.SignInRequest;
 import com.example.myfinances.dto.SignUpRequest;
 import com.example.myfinances.dto.UpdateUserDto;
 import com.example.myfinances.dto.UserOutData;
+import com.example.myfinances.dto.UserStock;
 
 import java.io.IOException;
+import java.util.List;
 
 import lombok.experimental.UtilityClass;
 import retrofit2.Call;
@@ -22,6 +24,12 @@ public class AuthConnectorService {
     }
     public static Response<UserOutData> signUp(SignUpRequest signUpRequest) {
         return makeRequest(AUTH_SERVICE_SERVICE.signUp(signUpRequest));
+    }
+    public static Response<List<UserStock>> getUserStocks(String email) {
+        return makeRequest(AUTH_SERVICE_SERVICE.getUserStocks(email));
+    }
+    public static Response<Void> saveUserStocks(List<UserStock> userStocks) {
+        return makeRequest(AUTH_SERVICE_SERVICE.saveUserStocks(userStocks));
     }
     public static Response<String> sendEmailVerificationCode(String email) {
         return makeRequest(AUTH_SERVICE_SERVICE.sendVerificationCode(email));
