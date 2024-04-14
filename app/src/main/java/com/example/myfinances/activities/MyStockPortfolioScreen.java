@@ -4,25 +4,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.myfinances.R;
+import com.example.myfinances.connectorservices.AuthConnectorService;
 import com.example.myfinances.dto.UserStock;
 import com.example.myfinances.stockproviders.IEXCloudStockProvider;
 import com.example.myfinances.dto.UserOutData;
 import com.example.myfinances.myelements.MyStockTableAdapter;
 import com.example.myfinances.stockproviders.StockProvider;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import forremove.MyStockMockData;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MyStockPortfolioScreen extends AppCompatActivity {
     private TextView profileLogin;
@@ -82,9 +86,9 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
         return userOutData.getLogin();
     }
     private void getStocks() {
-        boolean getStocks = new Random().nextBoolean();
+        boolean getStocks = true;//ThreadLocalRandom.current().nextBoolean();
 
-        if (!getStocks) {
+        if (!getStocks && AuthConnectorService.getUserStocks(userOutData.getEmail()).body().isEmpty()) {
             return;
         }
 
@@ -95,10 +99,31 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
         }
     }
     private String userStockToMyPortfolioString(UserStock userStock) {
-        StringBuilder sb1 = new StringBuilder();
-        StringBuilder sb2 = new StringBuilder();
-        EditText userStringStock = new EditText(this);
-        userStringStock.
-        return userStringStock.getText().toString();
+        var cNCFColor = getResources().getColor(R.color.white);
+        String companyName = userStock.getCompanyName();
+        BigDecimal cost = userStock.getCost();
+        Double frac = userStock.getFraction();
+
+        boolean condition = userStock.getIncome().compareTo(BigDecimal.ZERO) < 0;
+        var iIColor = getResources().getColor(condition ? R.color.error : R.color.active_menu_element);
+        @SuppressLint("UseCompatLoadingForDrawables") var arrow =
+                getResources().getDrawable(condition ? R.drawable.red_down_arrow : R.drawable.green_up_arrow);
+        BigDecimal income = userStock.getIncome();
+        double diffOfOneStockCost = userStock.getDiffOfOneStockCost();
+
+        var cIColor = getResources().getColor(R.color.notActiveAuthPage);
+        int count = userStock.getCount();
+        BigDecimal invested = userStock.getInvested();
+
+        TextView textView = new TextView(this);
+        String text = String.format(
+                "<font color=%s>%s\t%s</font>\t<font color=%s>%s</font> " +
+                "<font color=%s>%s</font>\n<font color=%s>%s\t%s</font>\t<font color=%s>%s</font>",
+                cNCFColor, companyName, cost, iIColor, income, cNCFColor, frac, cIColor, count, invested,
+                iIColor, diffOfOneStockCost
+        );
+        textView.setText(Html.fromHtml(text));
+
+        return textView.getText().toString();
     }
 }
