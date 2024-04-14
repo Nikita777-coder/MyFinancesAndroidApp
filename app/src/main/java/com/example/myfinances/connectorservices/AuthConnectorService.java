@@ -3,6 +3,7 @@ package com.example.myfinances.connectorservices;
 import com.example.myfinances.api.AuthApi;
 import com.example.myfinances.dto.ChangePasswordDto;
 import com.example.myfinances.dto.EmailVerificationRequest;
+import com.example.myfinances.dto.MarketStock;
 import com.example.myfinances.dto.SignInRequest;
 import com.example.myfinances.dto.SignUpRequest;
 import com.example.myfinances.dto.UpdateUserDto;
@@ -28,8 +29,8 @@ public class AuthConnectorService {
     public static Response<List<UserStock>> getUserStocks(String email) {
         return makeRequest(AUTH_SERVICE_SERVICE.getUserStocks(email));
     }
-    public static Response<Void> saveUserStocks(List<UserStock> userStocks) {
-        return makeRequest(AUTH_SERVICE_SERVICE.saveUserStocks(userStocks));
+    public static Response<Void> saveUserStocks(List<UserStock> userStocks, String email) {
+        return makeRequest(AUTH_SERVICE_SERVICE.saveUserStocks(userStocks, email));
     }
     public static Response<String> sendEmailVerificationCode(String email) {
         return makeRequest(AUTH_SERVICE_SERVICE.sendVerificationCode(email));
@@ -45,6 +46,20 @@ public class AuthConnectorService {
     }
     public static Response<Void> changePassword(ChangePasswordDto changePasswordDto) {
         return makeRequest(AUTH_SERVICE_SERVICE.changePassword(changePasswordDto));
+    }
+    public static Response<List<MarketStock>> getMarketStocks() {
+        return makeRequest(AUTH_SERVICE_SERVICE.getMarketStocks());
+    }
+    public static Response<Void> saveMarketStocks(List<MarketStock> marketStocks) {
+        Response<Void> answer = null;
+
+        try {
+            answer = makeRequest(AUTH_SERVICE_SERVICE.saveMarketStocks(marketStocks));
+        } catch (Exception ex) {
+            var exc = ex;
+        }
+
+        return answer;
     }
     private static <T> Response<T> makeRequest(Call<T> method) {
         final Response<T>[] ans = new Response[1];

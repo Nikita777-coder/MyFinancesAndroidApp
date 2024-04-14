@@ -2,6 +2,7 @@ package com.example.myfinances.api;
 
 import com.example.myfinances.dto.ChangePasswordDto;
 import com.example.myfinances.dto.EmailVerificationRequest;
+import com.example.myfinances.dto.MarketStock;
 import com.example.myfinances.dto.SignInRequest;
 import com.example.myfinances.dto.SignUpRequest;
 import com.example.myfinances.dto.UpdateUserDto;
@@ -21,9 +22,13 @@ import retrofit2.http.Query;
 public interface AuthApi {
     @POST("auth/signin")
     Call<UserOutData> signIn(@Body SignInRequest signInRequest);
-    @POST("")
-    Call<Void> saveUserStocks(@Body List<UserStock> stocks);
-    @GET("")
+    @POST("foo-debug-funcs/save-market-stocks")
+    Call<Void> saveMarketStocks(@Body List<MarketStock> marketStocks);
+    @GET("foo-debug-funcs/get-market-stocks")
+    Call<List<MarketStock>> getMarketStocks();
+    @POST("foo-debug-funcs/save-user-stocks")
+    Call<Void> saveUserStocks(@Body List<UserStock> stocks, @Query("email") String email);
+    @GET("foo-debug-funcs/get-user-stocks")
     Call<List<UserStock>> getUserStocks(@Query("email") String email);
     @POST("auth/signup")
     Call<UserOutData> signUp(@Body SignUpRequest signUpRequest);
