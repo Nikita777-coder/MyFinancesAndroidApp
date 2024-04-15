@@ -2,6 +2,7 @@ package com.example.myfinances.api;
 
 import com.example.myfinances.dto.ChangePasswordDto;
 import com.example.myfinances.dto.EmailVerificationRequest;
+import com.example.myfinances.dto.FooUserRisk;
 import com.example.myfinances.dto.MarketStock;
 import com.example.myfinances.dto.SignInRequest;
 import com.example.myfinances.dto.SignUpRequest;
@@ -39,7 +40,13 @@ public interface AuthApi {
     @PATCH("user/update_profile")
     Call<UpdateUserDto> updateUser(@Body UpdateUserDto updateUserDto);
     @PATCH("user/update_password_profile")
-    Call<Void> changePassword(@Body ChangePasswordDto changePasswordDto);
+    Call<UserOutData> changePassword(@Body ChangePasswordDto changePasswordDto);
     @GET("email/is_email_exists")
     Call<Boolean> isEmailExists(@Query("email") String email);
+    @POST("foo-debug-funcs/save-user-risk")
+    Call<Void> saveUserRisk(@Body FooUserRisk userRisk);
+    @GET("foo-debug-funcs/get-user-risk")
+    Call<FooUserRisk> getUserRisk(@Query("email") String email);
+    @GET("user/get_user_by_email")
+    Call<UserOutData> getUserData(@Query("email") String email);
 }

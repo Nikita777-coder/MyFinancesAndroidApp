@@ -10,6 +10,7 @@
     <color name="error">#FE5C5C</color>
     <color name="border_color">#FFFEFE</color>
     <color name="send_code">#A6A6A6</color>
+    <color name="some_gray_color_stock">#e8e8e8</color>
     <color name="forgot_password_title">#D3D1D1</color>
     <color name="main_pages_background_color">#2A2A32</color>
     <color name="grey_background">#373737</color>
@@ -18,4 +19,8 @@
     <color name="active_menu_element">#6AF681</color>
     <color name="stock_element_background">#4B4949</color>
     <color name="table_scroll_color">#D9D9D9</color>
+    <color name="profile_settings_back">#16161C</color>
+    <color name="choose_profile_photo">#377BFE</color>
+    <color name="profile_back">#4D4B4B</color>
+    <color name="profile_hint_color">#C1C0C0</color>
 </resources>

@@ -12,6 +12,7 @@ import com.example.myfinances.R;
 import com.example.myfinances.connectorservices.AuthConnectorService;
 import com.example.myfinances.dto.ChangePasswordDto;
 import com.example.myfinances.activities.MyStockPortfolioScreen;
+import com.example.myfinances.dto.UserOutData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +80,11 @@ public class ChangePasswordScreen extends AppCompatActivity {
     }
     private void activateContinueBtn() {
         ChangePasswordDto signUpRequest = new ChangePasswordDto(this.getIntent().getStringExtra("email"), repeatPassword.getText().toString());
-        AuthConnectorService.changePassword(signUpRequest);
-        startActivity(new Intent(this, MyStockPortfolioScreen.class));
+        UserOutData data = AuthConnectorService.changePassword(signUpRequest).body();
+
+        var nextIntent = new Intent(this, MyStockPortfolioScreen.class);
+        nextIntent.putExtra("user_data", data);
+
+        startActivity(nextIntent);
     }
 }

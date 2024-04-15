@@ -3,6 +3,7 @@ package com.example.myfinances.connectorservices;
 import com.example.myfinances.api.AuthApi;
 import com.example.myfinances.dto.ChangePasswordDto;
 import com.example.myfinances.dto.EmailVerificationRequest;
+import com.example.myfinances.dto.FooUserRisk;
 import com.example.myfinances.dto.MarketStock;
 import com.example.myfinances.dto.SignInRequest;
 import com.example.myfinances.dto.SignUpRequest;
@@ -44,11 +45,20 @@ public class AuthConnectorService {
     public static Response<UpdateUserDto> updateUser(UpdateUserDto updateUserDto) {
         return makeRequest(AUTH_SERVICE_SERVICE.updateUser(updateUserDto));
     }
-    public static Response<Void> changePassword(ChangePasswordDto changePasswordDto) {
+    public static Response<UserOutData> changePassword(ChangePasswordDto changePasswordDto) {
         return makeRequest(AUTH_SERVICE_SERVICE.changePassword(changePasswordDto));
     }
     public static Response<List<MarketStock>> getMarketStocks() {
         return makeRequest(AUTH_SERVICE_SERVICE.getMarketStocks());
+    }
+    public static Response<Void> saveUserRisk(FooUserRisk userRisk) {
+        return makeRequest(AUTH_SERVICE_SERVICE.saveUserRisk(userRisk));
+    }
+    public static Response<FooUserRisk> getUserRisk(String email) {
+        return makeRequest(AUTH_SERVICE_SERVICE.getUserRisk(email));
+    }
+    public static Response<UserOutData> getUserDataByEmail(String email) {
+        return makeRequest(AUTH_SERVICE_SERVICE.getUserData(email));
     }
     public static Response<Void> saveMarketStocks(List<MarketStock> marketStocks) {
         Response<Void> answer = null;

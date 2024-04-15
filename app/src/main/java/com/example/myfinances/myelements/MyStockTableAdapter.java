@@ -1,5 +1,7 @@
 package com.example.myfinances.myelements;
 
+import android.os.Build;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +34,10 @@ public class MyStockTableAdapter extends RecyclerView.Adapter<MyStockTableAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.getTextView().setText(data.get(position));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            holder.getTextView().setText(Html.fromHtml(data.get(position), Html.FROM_HTML_MODE_COMPACT));
+        }
+        holder.getTextView().setTextSize(10);
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.example.myfinances.dto;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Getter
 @Setter
 public class UpdateUserDto {
@@ -13,5 +11,4 @@ public class UpdateUserDto {
     private String password;
     private String firstName;
     private String lastName;
-    private Boolean isActive;
 }

@@ -38,6 +38,15 @@
     <string name="my_portfolio_stocks_table_head_title">Название</string>
     <string name="my_portfolio_table_default_state">У Вас нет приобретённых ценных бумаг</string>
     <string name="user_data">user_data</string>
+    <string name="stock_cost">Цена</string>
+    <string name="total_cost">Стоимость</string>
+    <string name="stock_grow">Рост акций</string>
+    <string name="choose_photo">Выбрать фотографию</string>
+    <string name="profile_name_hint">Имя</string>
+    <string name="profile_surname_hint">Фамилия</string>
+    <string name="profile_login_hint">Логин</string>
+    <string name="profile_email_hint">Электронная почта</string>
+    <string name="profile_telephone_hint">Номер телефона</string>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus

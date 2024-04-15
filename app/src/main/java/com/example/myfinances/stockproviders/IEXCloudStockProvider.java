@@ -37,7 +37,7 @@ public class IEXCloudStockProvider implements StockProvider {
     private final Set<Integer> marketStocksIndexes = new HashSet<>(450);
     @Override
     public List<MarketStock> getStocks(String email) {
-        List<MarketStock> stocks = marketStocks;
+        List<MarketStock> stocks = AuthConnectorService.getMarketStocks().body();
         checkStockMarketStocks();
 
         List<String> userStocks = getUserStockSymbols(getUStocks(email));
@@ -128,7 +128,9 @@ public class IEXCloudStockProvider implements StockProvider {
         int size = Math.min(400, realStocksInfo.size());
         List<Map<String, Object>> stocksInfo = new ArrayList<>(size);
 
-        for (int i = 0; i < size; ++i) {
+        int i = 0;
+
+        while(stocksInfo.size() != size) {
             Response<ResponseBody> stockResponseBody = makeRequest(
                     connectorService.getStockInfo(realStocksInfo.get(i).get("symbol").toString(),
                             "pk_c6dc755d13c44c82a2e85dfbe6c356b0")
@@ -140,7 +142,14 @@ public class IEXCloudStockProvider implements StockProvider {
 
             var jsonBody = getRowBodyFromResponse(stockResponseBody);
             var ans = parseRandomResponse(jsonBody).get(0);
+
+            if ((Double) ans.get("avgTotalVolume") == 0.0) {
+                i++;
+                continue;
+            }
+
             stocksInfo.add(ans);
+            i++;
 
             try {
                 Thread.sleep(ThreadLocalRandom.current().nextLong(200, 251));
@@ -199,13 +208,21 @@ public class IEXCloudStockProvider implements StockProvider {
         for (int i = 0; i < data.size(); ++i) {
             var currentMap = data.get(i);
 
-            String symbol = (String) currentMap.get("symbol");
-            String companyName = (String) currentMap.get("companyName");
-            int count = generatePseudoRandomInRange(4, 20);
-            double latestPrice = (double) currentMap.get("latestPrice") * 95.8;
-            double totalCost = count * latestPrice;
+            String symbol = "", companyName = "";
+            double latestPrice = 0, growPercentage = 0;
             double growMoney = generatePseudoRandomInRangeD(-12.968, 15.12);
-            double growPercentage = growMoney / latestPrice;
+
+            try {
+                symbol = (String) currentMap.get("symbol");
+                companyName = (String) currentMap.get("companyName");
+                latestPrice = (double) currentMap.get("latestPrice") * 95.8;
+                growPercentage = growMoney / latestPrice;
+            } catch (Exception ex) {
+                var exc = ex;
+            }
+
+            int count = generatePseudoRandomInRange(4, 20);
+            double totalCost = count * latestPrice;
 
             MarketStock marketStock = new MarketStock();
             marketStock.setCompanyName(companyName);
