@@ -1,9 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_pages_background_color"
     tools:context=".activities.StocksScreen">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="60dp"
+            android:text="@string/title"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="90dp">
+
+            <ImageButton
+                android:id="@+id/profile_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/profile_page"
+                android:background="@android:color/transparent" />
+
+            <TextView
+                android:id="@+id/profile_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_page"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="160dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/stocks_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_portfolio_stocks_table_head_title"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:text="@string/stock_cost"
+                android:textColor="@color/white"
+                android:layout_marginHorizontal="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_cost"
+                android:textColor="@color/white"
+                android:layout_marginHorizontal="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stock_grow"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/stock_table"
+            android:layout_width="275dp"
+            android:visibility="gone"
+            android:layout_height="150dp"
+            android:scrollbars="vertical"
+            style="@style/RecyclerViewStockTableStyle"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:background="@color/menu_panel">
+
+            <ImageButton
+                android:id="@+id/stocks_page"
+                android:layout_width="60dip"
+                android:layout_height="45dip"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/stocks_page"
+                android:backgroundTint="@color/active_menu_element" />
+
+            <ImageButton
+                android:id="@+id/my_portfolio"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:background="@drawable/my_portfolio"
+                 />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>
