@@ -168,10 +168,12 @@ public class MyStockPortfolioScreen extends AppCompatActivity {
     @SuppressLint({"UseCompatLoadingForDrawables", "ResourceAsColor"})
     private void setMyPortfolioReviewElements(List<UserStock> userStocks) {
         BigDecimal cost = getTotalCost(userStocks);
+        cost = cost.setScale(2, RoundingMode.HALF_UP);
         String text = String.format("%s ₽", cost);
         myPortfolioCost.setText(text);
 
         BigDecimal invest = getTotalInvest(userStocks);
+        invest = invest.setScale(2, RoundingMode.HALF_UP);
         text = String.format("вложено %s ₽", invest);
         myPortfolioInvest.setText(text);
 
